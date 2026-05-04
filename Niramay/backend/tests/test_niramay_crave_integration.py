@@ -47,7 +47,7 @@ import requests
 
 BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000").rstrip("/")
 CRAVE_URL = os.environ.get("CRAVE_URL", "http://localhost:8001").rstrip("/")
-CRAVE_DEV_TOKEN = os.environ.get("CRAVE_DEV_TOKEN", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJkZXZlbG9wZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoiZGV2ZWxvcGVyIiwiZXhwIjoxNzc3ODAyMjE5LCJ0eXBlIjoiYWNjZXNzIn0.JPPhmGb4QeAzOJcG_IFrmwFi7bz01HUGPagCGgOOqzo")
+CRAVE_DEV_TOKEN = os.environ.get("CRAVE_DEV_TOKEN", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJkZXZlbG9wZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoiZGV2ZWxvcGVyIiwiZXhwIjoxNzc3ODExMDk5LCJ0eXBlIjoiYWNjZXNzIn0.FNZ6W4DddODivEXQNVVnC4CSIY9kD8HAIb1dWWrp0Vk")
 
 TRAFFIC_BURST_COUNT         = int(os.environ.get("TRAFFIC_BURST_COUNT", "20"))
 RABBITMQ_SETTLE_SECONDS     = int(os.environ.get("RABBITMQ_SETTLE_SECONDS", "5"))
