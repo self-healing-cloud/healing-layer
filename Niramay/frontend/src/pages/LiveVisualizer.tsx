@@ -25,7 +25,7 @@ function MetricsBar({ metrics, isLive, setIsLive, lastRefresh, fetchData }: {
   const items = [
     { label: 'Requests', value: metrics.totalRequests, color: 'var(--color-text-primary)' },
     { label: 'Success', value: `${metrics.successRate}%`, color: 'var(--color-status-success)' },
-    { label: 'Latency', value: `${metrics.avgLatency}ms`, color: 'var(--color-text-primary)' },
+    { label: 'Latency', value: metrics.avgLatency, color: 'var(--color-text-primary)' },
     { label: 'Anomalies', value: metrics.activeAnomalies, color: metrics.activeAnomalies > 0 ? 'var(--color-status-warning)' : 'var(--color-text-primary)' },
     { label: 'Healed', value: metrics.totalHealed, color: metrics.totalHealed > 0 ? 'var(--color-status-success)' : 'var(--color-text-primary)' },
   ];
@@ -57,7 +57,7 @@ function MetricsBar({ metrics, isLive, setIsLive, lastRefresh, fetchData }: {
       >
         <span className={`dot ${isLive ? 'dot-success dot-live' : 'dot-neutral'}`} style={{ width: 6, height: 6 }} />
         <span style={{
-          fontSize: 10,
+          fontSize: 'var(--text-xs)',
           color: isLive ? 'var(--color-status-success)' : 'var(--color-text-tertiary)',
           letterSpacing: 'var(--tracking-widest)',
           textTransform: 'uppercase',
@@ -89,7 +89,7 @@ function MetricsBar({ metrics, isLive, setIsLive, lastRefresh, fetchData }: {
             {item.value}
           </span>
           <span style={{
-            fontSize: 9,
+            fontSize: 'var(--text-xs)',
             color: 'var(--color-text-tertiary)',
             letterSpacing: 'var(--tracking-widest)',
             textTransform: 'uppercase',
@@ -110,7 +110,7 @@ function MetricsBar({ metrics, isLive, setIsLive, lastRefresh, fetchData }: {
         </svg>
       </button>
       <span style={{
-        fontSize: 10,
+        fontSize: 'var(--text-xs)',
         color: 'var(--color-text-tertiary)',
         fontFamily: 'var(--font-mono)',
         fontVariantNumeric: 'tabular-nums',
@@ -157,7 +157,7 @@ function ObservationStream({ logs }: { logs: ReturnType<typeof useNiramayData>['
             Observation Stream
           </span>
         </div>
-        <span className="badge badge-info" style={{ fontSize: 10 }}>{logs.length} events</span>
+        <span className="badge badge-info" style={{ fontSize: 'var(--text-xs)' }}>{logs.length} events</span>
       </div>
 
       <div style={{
@@ -218,7 +218,7 @@ function ObservationStream({ logs }: { logs: ReturnType<typeof useNiramayData>['
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 fontFamily: 'var(--font-mono)',
-                fontSize: 11,
+                fontSize: 'var(--text-xs)',
               }} title={log.endpoint}>
                 {log.endpoint.replace('/api/v1/', '/')}
               </span>
@@ -232,7 +232,7 @@ function ObservationStream({ logs }: { logs: ReturnType<typeof useNiramayData>['
               </span>
               <span className="subtle-on-hover" style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 10,
+                fontSize: 'var(--text-xs)',
                 color: 'var(--color-text-tertiary)',
                 width: 40,
                 textAlign: 'right',
@@ -287,7 +287,7 @@ function DetectionEngine({ anomalies, stats }: { anomalies: any[], stats: any })
           </span>
         </div>
         {hasAnomalies && (
-          <span className="badge badge-warning" style={{ fontSize: 10 }}>
+          <span className="badge badge-warning" style={{ fontSize: 'var(--text-xs)' }}>
             {anomalies.length} detected
           </span>
         )}
@@ -296,15 +296,18 @@ function DetectionEngine({ anomalies, stats }: { anomalies: any[], stats: any })
       {/* AI Core Visualization */}
       <div style={{
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'var(--space-6)',
+        padding: 'var(--space-5) var(--space-4) var(--space-3)',
         position: 'relative',
+        overflow: 'hidden',
+        gap: 'var(--space-2)',
       }}>
-        {/* Pulse rings */}
+        {/* Pulse ring container — clipped */}
         <div className="pulse-core" style={{
-          width: 80,
-          height: 80,
+          width: 56,
+          height: 56,
           borderRadius: '50%',
           background: hasAnomalies
             ? (isDark
@@ -317,31 +320,29 @@ function DetectionEngine({ anomalies, stats }: { anomalies: any[], stats: any })
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexShrink: 0,
           transition: 'all 0.5s ease',
           ...(isDark ? {
-            boxShadow: `0 0 20px ${hasAnomalies ? 'var(--glow-warning)' : 'var(--glow-primary)'}`,
+            boxShadow: `0 0 16px ${hasAnomalies ? 'var(--glow-warning)' : 'var(--glow-primary)'}`,
           } : {}),
         }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)'} strokeWidth="1.5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)'} strokeWidth="1.5">
             <path d="M12 4L20 8V16L12 20L4 16V8L12 4Z" />
             <circle cx="12" cy="12" r="3" />
           </svg>
         </div>
 
-        {/* Status label */}
-        <div style={{
-          position: 'absolute',
-          bottom: 'var(--space-2)',
-          left: '50%',
-          transform: 'translateX(-50%)',
+        {/* Status label — inline, not floating */}
+        <span style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: 9,
+          fontSize: 'var(--text-xs)',
           color: hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)',
           letterSpacing: 'var(--tracking-widest)',
           textTransform: 'uppercase',
+          lineHeight: 1,
         }}>
           {hasAnomalies ? 'ANOMALIES DETECTED' : 'MONITORING'}
-        </div>
+        </span>
       </div>
 
       {/* Anomaly feed */}
@@ -378,7 +379,7 @@ function DetectionEngine({ anomalies, stats }: { anomalies: any[], stats: any })
               <span className={`dot dot-${a.severity === 'critical' || a.severity === 'high' ? 'error' : 'warning'}`} />
               <span style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 10,
+                fontSize: 'var(--text-xs)',
                 color: a.severity === 'critical' || a.severity === 'high' ? 'var(--color-status-error)' : 'var(--color-status-warning)',
                 fontVariantNumeric: 'tabular-nums',
               }}>
@@ -396,7 +397,7 @@ function DetectionEngine({ anomalies, stats }: { anomalies: any[], stats: any })
                 {a.endpoint.replace('/api/v1/', '/')}
               </span>
               <span style={{
-                fontSize: 9,
+                fontSize: 'var(--text-xs)',
                 color: 'var(--color-text-tertiary)',
               }}>
                 {timeAgo(a.timestamp)}
@@ -410,7 +411,7 @@ function DetectionEngine({ anomalies, stats }: { anomalies: any[], stats: any })
                 flexWrap: 'wrap',
               }}>
                 {a.anomaly_reasons.map((r, ri) => (
-                  <span key={ri} className="badge badge-neutral" style={{ fontSize: 9, padding: '0 6px' }}>
+                  <span key={ri} className="badge badge-neutral" style={{ fontSize: 'var(--text-xs)', padding: '0 6px' }}>
                     {r.replace(/_/g, ' ')}
                   </span>
                 ))}
@@ -481,17 +482,17 @@ function HealingOutput({ actions }: { actions: ReturnType<typeof useNiramayData>
           </span>
         </div>
         {visibleActions.filter(a => effectiveOutcome(a) === 'success').length > 0 && (
-          <span className="badge badge-success" style={{ fontSize: 10 }}>
+          <span className="badge badge-success" style={{ fontSize: 'var(--text-xs)' }}>
             {visibleActions.filter(a => effectiveOutcome(a) === 'success').length} healed
           </span>
         )}
         {visibleActions.filter(a => effectiveOutcome(a) === 'pending').length > 0 && (
-          <span className="badge badge-warning" style={{ fontSize: 10 }}>
+          <span className="badge badge-warning" style={{ fontSize: 'var(--text-xs)' }}>
             {visibleActions.filter(a => effectiveOutcome(a) === 'pending').length} verifying
           </span>
         )}
         {visibleActions.filter(a => effectiveOutcome(a) === 'failed').length > 0 && (
-          <span className="badge badge-error" style={{ fontSize: 10 }}>
+          <span className="badge badge-error" style={{ fontSize: 'var(--text-xs)' }}>
             {visibleActions.filter(a => effectiveOutcome(a) === 'failed').length} failed
           </span>
         )}
@@ -580,7 +581,7 @@ function HealingOutput({ actions }: { actions: ReturnType<typeof useNiramayData>
                   {action.healing_action.replace(/_/g, ' ')}
                 </div>
                 <div className="reveal-on-hover" style={{
-                  fontSize: 10,
+                  fontSize: 'var(--text-xs)',
                   color: 'var(--color-text-tertiary)',
                   marginTop: 1,
                 }}>
@@ -593,7 +594,7 @@ function HealingOutput({ actions }: { actions: ReturnType<typeof useNiramayData>
                 const outcome = effectiveOutcome(action);
                 return (
                   <span className={`badge ${outcome === 'success' ? 'badge-success' : outcome === 'pending' ? 'badge-warning' : 'badge-error'}`} style={{
-                    fontSize: 9,
+                    fontSize: 'var(--text-xs)',
                     padding: '1px 8px',
                   }}>
                     {outcome === 'success' ? 'Healed' : outcome === 'pending' ? 'Verifying' : 'Failed'}
@@ -614,36 +615,47 @@ function HealingOutput({ actions }: { actions: ReturnType<typeof useNiramayData>
    ═══════════════════════════════════════════════════════════════════ */
 
 function DataStreamConnector({ hasAnomalies }: { hasAnomalies: boolean }) {
-  const { isDark } = useTheme();
+  const color = hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)';
   return (
     <div style={{
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      width: 48,
+      width: 64,
       flexShrink: 0,
-      alignSelf: 'stretch',
+      position: 'relative',
+      overflow: 'visible',
     }}>
-      <svg width="48" height="100%" viewBox="0 0 48 200" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
-        <defs>
-          <linearGradient id="streamGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor={hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)'} stopOpacity="0.1" />
-            <stop offset="50%" stopColor={hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)'} stopOpacity="0.6" />
-            <stop offset="100%" stopColor={hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)'} stopOpacity="0.1" />
-          </linearGradient>
-        </defs>
-        <line
-          x1="4" y1="100" x2="44" y2="100"
-          className={`data-stream-line ${hasAnomalies ? 'warning' : 'active'}`}
-        />
-        {/* Flowing dot */}
-        <circle r="3" fill={hasAnomalies ? 'var(--color-status-warning)' : 'var(--color-accent-primary)'} opacity="0.8">
-          <animateMotion
-            dur="1.5s"
-            repeatCount="indefinite"
-            path="M4,100 L44,100"
-          />
-        </circle>
+      {/* Dashed connecting line */}
+      <div style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: '50%',
+        height: 2,
+        background: `repeating-linear-gradient(90deg, ${color} 0px, ${color} 6px, transparent 6px, transparent 12px)`,
+        opacity: 0.4,
+      }} />
+
+      {/* Animated flowing dot */}
+      <div style={{
+        position: 'absolute',
+        width: 6,
+        height: 6,
+        borderRadius: '50%',
+        background: color,
+        top: 'calc(50% - 3px)',
+        animation: 'connectorFlow 1.5s linear infinite',
+        boxShadow: `0 0 8px ${color}`,
+      }} />
+
+      {/* Arrow head */}
+      <svg width="8" height="8" viewBox="0 0 8 8" fill="none" style={{
+        position: 'absolute',
+        right: 0,
+        top: 'calc(50% - 4px)',
+      }}>
+        <path d="M0 0L8 4L0 8" fill={color} opacity="0.5" />
       </svg>
     </div>
   );
@@ -763,7 +775,7 @@ function CopilotPanel() {
                 <span
                   key={r.id}
                   className={`badge ${r.severity === 'high' ? 'badge-error' : r.severity === 'medium' ? 'badge-warning' : 'badge-neutral'}`}
-                  style={{ fontSize: 9, padding: '1px 6px' }}
+                  style={{ fontSize: 'var(--text-xs)', padding: '1px 6px' }}
                 >
                   {r.severity.toUpperCase()}: {r.title.split(' ').slice(0, 4).join(' ')}...
                 </span>
@@ -958,6 +970,12 @@ export default function LiveVisualizer() {
           main > div:last-of-type > div:nth-child(4) svg {
             transform: rotate(90deg);
           }
+        }
+        @keyframes connectorFlow {
+          0% { left: -6px; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { left: calc(100% - 6px); opacity: 0; }
         }
       `}</style>
     </div>

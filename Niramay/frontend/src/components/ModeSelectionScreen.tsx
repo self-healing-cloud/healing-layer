@@ -63,18 +63,14 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
         <div style={{
           position: 'absolute', width: 400, height: 400,
           borderRadius: '50%',
-          background: isDark
-            ? 'radial-gradient(circle, rgba(212,132,94,0.06) 0%, transparent 70%)'
-            : 'radial-gradient(circle, rgba(196,101,58,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, var(--color-accent-warm-bg) 0%, transparent 70%)',
           top: '10%', left: '15%',
           animation: 'float 8s ease-in-out infinite',
         }} />
         <div style={{
           position: 'absolute', width: 300, height: 300,
           borderRadius: '50%',
-          background: isDark
-            ? 'radial-gradient(circle, rgba(212,132,94,0.04) 0%, transparent 70%)'
-            : 'radial-gradient(circle, rgba(196,101,58,0.03) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, var(--color-accent-warm-bg) 0%, transparent 70%)',
           bottom: '15%', right: '10%',
           animation: 'floatReverse 6s ease-in-out infinite',
         }} />
@@ -105,8 +101,8 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto var(--space-4)',
             boxShadow: isDark
-              ? '0 0 30px rgba(212,132,94,0.25), 0 4px 20px rgba(0,0,0,0.4)'
-              : '0 4px 20px rgba(196,101,58,0.15), 0 2px 10px rgba(0,0,0,0.08)',
+              ? '0 0 30px var(--glow-primary), 0 4px 20px rgba(0,0,0,0.4)'
+              : '0 4px 20px var(--glow-primary), 0 2px 10px rgba(0,0,0,0.08)',
           }}>
             <svg width="24" height="24" viewBox="0 0 16 16" fill="none">
               <path d="M8 2L14 6V14H2V6L8 2Z" stroke={isDark ? '#0A0E17' : '#fff'} strokeWidth="1.5" fill="none" />
@@ -182,7 +178,7 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
               cursor: loading ? 'wait' : 'pointer',
               transition: 'all 200ms ease',
               boxShadow: hoveredCard === 'manual'
-                ? (isDark ? '0 0 20px rgba(212,132,94,0.1)' : '0 4px 24px rgba(0,0,0,0.08)')
+                ? 'var(--shadow-lg)'
                 : 'none',
             }}
           >
@@ -190,8 +186,8 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
             <div style={{
               width: 44, height: 44,
               borderRadius: 'var(--radius-lg)',
-              background: 'rgba(212,132,94,0.08)',
-              border: '1px solid rgba(212,132,94,0.15)',
+              background: 'var(--color-accent-warm-bg)',
+              border: '1px solid var(--color-border-default)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               marginBottom: 'var(--space-4)',
             }}>
@@ -229,18 +225,18 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
               marginBottom: 'var(--space-4)',
             }}>
               <span style={{
-                fontSize: 9, padding: '2px 8px',
+                fontSize: 'var(--text-xs)', padding: '2px 8px',
                 borderRadius: 'var(--radius-full)',
-                background: 'rgba(239,68,68,0.06)',
-                border: '1px solid rgba(239,68,68,0.15)',
+                background: 'var(--color-status-error-bg)',
+                border: '1px solid var(--color-status-error-border)',
                 color: 'var(--color-status-error)',
                 letterSpacing: '0.05em', textTransform: 'uppercase', fontWeight: 500,
               }}>Consumer OFF</span>
               <span style={{
-                fontSize: 9, padding: '2px 8px',
+                fontSize: 'var(--text-xs)', padding: '2px 8px',
                 borderRadius: 'var(--radius-full)',
-                background: 'rgba(239,68,68,0.06)',
-                border: '1px solid rgba(239,68,68,0.15)',
+                background: 'var(--color-status-error-bg)',
+                border: '1px solid var(--color-status-error-border)',
                 color: 'var(--color-status-error)',
                 letterSpacing: '0.05em', textTransform: 'uppercase', fontWeight: 500,
               }}>Healing OFF</span>
@@ -283,7 +279,7 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
               cursor: loading ? 'wait' : 'pointer',
               transition: 'all 200ms ease',
               boxShadow: hoveredCard === 'ai'
-                ? (isDark ? '0 0 20px rgba(212,132,94,0.1)' : '0 4px 24px rgba(0,0,0,0.08)')
+                ? 'var(--shadow-lg)'
                 : 'none',
             }}
           >
@@ -291,8 +287,8 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
             <div style={{
               width: 44, height: 44,
               borderRadius: 'var(--radius-lg)',
-              background: 'rgba(212,132,94,0.08)',
-              border: '1px solid rgba(212,132,94,0.15)',
+              background: 'var(--color-accent-warm-bg)',
+              border: '1px solid var(--color-border-default)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               marginBottom: 'var(--space-4)',
             }}>
@@ -328,18 +324,18 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
               marginBottom: 'var(--space-4)',
             }}>
               <span style={{
-                fontSize: 9, padding: '2px 8px',
+                fontSize: 'var(--text-xs)', padding: '2px 8px',
                 borderRadius: 'var(--radius-full)',
-                background: 'rgba(45,122,79,0.08)',
-                border: '1px solid rgba(45,122,79,0.2)',
+                background: 'var(--color-status-success-bg)',
+                border: '1px solid var(--color-status-success-border)',
                 color: 'var(--color-status-success)',
                 letterSpacing: '0.05em', textTransform: 'uppercase', fontWeight: 500,
               }}>Consumer ON</span>
               <span style={{
-                fontSize: 9, padding: '2px 8px',
+                fontSize: 'var(--text-xs)', padding: '2px 8px',
                 borderRadius: 'var(--radius-full)',
-                background: 'rgba(45,122,79,0.08)',
-                border: '1px solid rgba(45,122,79,0.2)',
+                background: 'var(--color-status-success-bg)',
+                border: '1px solid var(--color-status-success-border)',
                 color: 'var(--color-status-success)',
                 letterSpacing: '0.05em', textTransform: 'uppercase', fontWeight: 500,
               }}>Healing ON</span>
@@ -348,7 +344,7 @@ export default function ModeSelectionScreen({ onSelect }: ModeSelectionScreenPro
             <div style={{
               padding: '8px 16px',
               borderRadius: 'var(--radius-md)',
-              background: 'rgba(212,132,94,0.1)',
+              background: 'var(--color-accent-tertiary)',
               color: 'var(--color-accent-primary)',
               fontSize: 'var(--text-xs)',
               fontWeight: 600,

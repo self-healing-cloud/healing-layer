@@ -88,8 +88,8 @@ export default function DetectionAlerts({
             borderWidth: 1,
             cornerRadius: 8,
             padding: 8,
-            titleFont: { family: 'DM Sans', size: 11 },
-            bodyFont: { family: 'DM Sans', size: 11 },
+            titleFont: { family: 'Inter', size: 11 },
+            bodyFont: { family: 'Inter', size: 11 },
           },
         },
         scales: {
@@ -98,7 +98,7 @@ export default function DetectionAlerts({
             grid: { display: false },
             ticks: {
               color: isDark ? 'rgba(240, 235, 227, 0.3)' : 'rgba(28, 24, 18, 0.3)',
-              font: { family: 'DM Sans', size: 9 },
+              font: { family: 'Inter', size: 9 },
             },
           },
           y: { display: false },
@@ -221,13 +221,13 @@ export default function DetectionAlerts({
                   </span>
 
                   {a.requires_llm && (
-                    <span className="badge badge-accent" style={{ fontSize: 8, padding: '0 4px' }}>AI</span>
+                    <span className="badge badge-accent" style={{ fontSize: 'var(--text-xs)', padding: '0 4px' }}>AI</span>
                   )}
 
                   <span style={{ flex: 1 }} />
 
                   <span className="subtle-on-hover" style={{
-                    fontSize: 10,
+                    fontSize: 'var(--text-xs)',
                     color: 'var(--color-text-tertiary)',
                   }}>
                     {timeAgo(a.timestamp)}
@@ -257,7 +257,7 @@ export default function DetectionAlerts({
                   }}>
                     {a.anomaly_reasons.map((r, ri) => (
                       <span key={ri} className="badge badge-neutral" style={{
-                        fontSize: 10,
+                        fontSize: 'var(--text-xs)',
                         padding: '1px 8px',
                       }}>
                         {r.replace(/_/g, ' ')}

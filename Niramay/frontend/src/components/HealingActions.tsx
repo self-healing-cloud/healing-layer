@@ -191,7 +191,7 @@ export default function HealingActionsPanel({ actions }: { actions: HealingActio
 
                     <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
                       {a.retry_count != null && a.retry_count > 0 && (
-                        <span className="badge badge-neutral" style={{ fontSize: 9, padding: '1px 4px' }}>
+                        <span className="badge badge-neutral" style={{ fontSize: 'var(--text-xs)', padding: '1px 4px' }}>
                           Attempt {a.retry_count + 1}
                         </span>
                       )}
@@ -200,7 +200,7 @@ export default function HealingActionsPanel({ actions }: { actions: HealingActio
                         <span className={`badge badge-${
                           a.verification_status === 'SUCCESS' || a.verification_status === 'HEALED'
                             ? 'success' : 'error'
-                        }`} style={{ fontSize: 9, padding: '1px 4px' }}>
+                        }`} style={{ fontSize: 'var(--text-xs)', padding: '1px 4px' }}>
                           {a.verification_status === 'SUCCESS' || a.verification_status === 'HEALED'
                             ? 'PASSED' : 'FAILED'}
                         </span>
@@ -215,7 +215,7 @@ export default function HealingActionsPanel({ actions }: { actions: HealingActio
                       display: 'flex',
                       gap: 'var(--space-3)',
                       marginTop: 'var(--space-1)',
-                      fontSize: 10,
+                      fontSize: 'var(--text-xs)',
                       color: 'var(--color-text-tertiary)',
                       fontFamily: 'var(--font-mono)',
                     }}>
@@ -228,7 +228,7 @@ export default function HealingActionsPanel({ actions }: { actions: HealingActio
                   {a.scenarios_disabled && a.scenarios_disabled.length > 0 && (
                     <div style={{
                       marginTop: 'var(--space-1)',
-                      fontSize: 10,
+                      fontSize: 'var(--text-xs)',
                       color: 'var(--color-status-success)',
                       fontFamily: 'var(--font-mono)',
                     }}>
@@ -240,7 +240,7 @@ export default function HealingActionsPanel({ actions }: { actions: HealingActio
                   {a.status === 'failed' && a.error && (
                     <div style={{
                       marginTop: 'var(--space-1)',
-                      fontSize: 10,
+                      fontSize: 'var(--text-xs)',
                       color: 'var(--color-status-error)',
                       fontFamily: 'var(--font-mono)',
                     }}>
@@ -260,7 +260,7 @@ export default function HealingActionsPanel({ actions }: { actions: HealingActio
 
                   {/* Time */}
                   <span className="subtle-on-hover" style={{
-                    fontSize: 10,
+                    fontSize: 'var(--text-xs)',
                     color: 'var(--color-text-tertiary)',
                     marginTop: 'var(--space-1)',
                     display: 'block',

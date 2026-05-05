@@ -248,7 +248,7 @@ export default function PipelineArtifactCards() {
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-border-subtle)'; }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-2)' }}>
-                      <span style={{ fontSize: 9, color: 'var(--color-text-tertiary)', letterSpacing: 'var(--tracking-wider)', textTransform: 'uppercase' }}>
+                      <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', letterSpacing: 'var(--tracking-wider)', textTransform: 'uppercase' }}>
                         {meta.stage}
                       </span>
                       <div style={{ display: 'flex', gap: 4 }}>
@@ -282,15 +282,15 @@ export default function PipelineArtifactCards() {
                     <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', marginBottom: 4 }}>
                       {meta.label}
                     </div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 22, color: 'var(--color-text-primary)', fontWeight: 700, marginBottom: 4 }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xl)', color: 'var(--color-text-primary)', fontWeight: 700, marginBottom: 4 }}>
                       {card.count.toLocaleString()}
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)' }}>
+                      <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
                         {formatLastUpdated(card.last_updated)}
                       </span>
                       <span style={{
-                        fontSize: 9, padding: '2px 6px', borderRadius: 'var(--radius-full)', fontWeight: 600,
+                        fontSize: 'var(--text-xs)', padding: '2px 6px', borderRadius: 'var(--radius-full)', fontWeight: 600,
                         background: live ? 'rgba(45,122,79,0.1)' : 'rgba(202,138,4,0.1)',
                         color: live ? 'var(--color-status-success)' : 'var(--color-status-warning)',
                         border: `1px solid ${live ? 'rgba(45,122,79,0.2)' : 'rgba(202,138,4,0.2)'}`,

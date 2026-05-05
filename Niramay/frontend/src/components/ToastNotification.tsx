@@ -111,12 +111,25 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             }),
             createElement('span', {
               style: {
-                fontSize: 'var(--text-md)',
+                fontSize: 'var(--text-sm)',
                 fontWeight: 500,
                 color: 'var(--color-text-primary)',
                 lineHeight: 'var(--leading-normal)',
+                flex: 1,
               },
             }, t.message),
+            createElement('button', {
+              onClick: (e: any) => { e.stopPropagation(); removeToast(t.id); },
+              style: {
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: 'var(--color-text-tertiary)',
+                fontSize: 'var(--text-base)',
+                lineHeight: 1,
+                padding: '0 0 0 var(--space-2)',
+                flexShrink: 0,
+              },
+              'aria-label': 'Dismiss',
+            }, '×'),
           )
         )
       )

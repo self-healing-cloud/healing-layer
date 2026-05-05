@@ -91,13 +91,13 @@ export const IncidentReportsPanel: React.FC<IncidentReportsPanelProps> = ({ repo
                 }}>
                   {report.service}
                 </span>
-                <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)' }}>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
                   {timeAgo(report.timestamp)}
                 </span>
               </div>
               <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
                 <span style={{
-                  fontSize: 11,
+                  fontSize: 'var(--text-xs)',
                   padding: '2px 6px',
                   borderRadius: 'var(--radius-sm)',
                   backgroundColor: `${getStatusColor(report.verification_status)}22`,

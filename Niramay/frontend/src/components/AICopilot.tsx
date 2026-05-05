@@ -191,7 +191,7 @@ export default function AICopilot({ anomalies = [] }: { anomalies?: AnomalyLog[]
                 <span className={`badge ${a.ai_analysis.confidence > 0.8 ? 'badge-success' : 'badge-warning'}`}>
                   {Math.round(a.ai_analysis.confidence * 100)}% Conf
                 </span>
-                <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)' }}>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)' }}>
                   {a.endpoint}
                 </span>
               </div>

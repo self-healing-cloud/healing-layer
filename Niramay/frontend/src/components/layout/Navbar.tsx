@@ -25,6 +25,8 @@ export default function Navbar() {
 
   const isVisualizer = location.pathname === '/visualizer';
   const isDashboard = location.pathname === '/dashboard';
+  const isReports = location.pathname === '/reports';
+  const isHome = !isDashboard && !isVisualizer && !isReports;
 
   return (
     <motion.nav
@@ -103,9 +105,9 @@ export default function Navbar() {
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             padding: '4px 12px', borderRadius: 'var(--radius-full)',
-            background: consumer.status.running ? 'rgba(45,122,79,0.08)' : 'rgba(239,68,68,0.06)',
-            border: `1px solid ${consumer.status.running ? 'rgba(45,122,79,0.2)' : 'rgba(239,68,68,0.15)'}`,
-            cursor: consumer.loading ? 'wait' : 'pointer', fontSize: 10,
+            background: consumer.status.running ? 'var(--color-status-success-bg)' : 'var(--color-status-error-bg)',
+            border: `1px solid ${consumer.status.running ? 'var(--color-status-success-border)' : 'var(--color-status-error-border)'}`,
+            cursor: consumer.loading ? 'wait' : 'pointer', fontSize: 'var(--text-xs)',
             color: consumer.status.running ? 'var(--color-status-success)' : 'var(--color-status-error)',
             letterSpacing: '0.05em', textTransform: 'uppercase' as any,
             fontWeight: 500, transition: 'all 180ms ease',
@@ -122,9 +124,9 @@ export default function Navbar() {
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             padding: '4px 12px', borderRadius: 'var(--radius-full)',
-            background: healingToggle.enabled ? 'rgba(45,122,79,0.08)' : 'rgba(239,68,68,0.06)',
-            border: `1px solid ${healingToggle.enabled ? 'rgba(45,122,79,0.2)' : 'rgba(239,68,68,0.15)'}`,
-            cursor: healingToggle.loading ? 'wait' : 'pointer', fontSize: 10,
+            background: healingToggle.enabled ? 'var(--color-status-success-bg)' : 'var(--color-status-error-bg)',
+            border: `1px solid ${healingToggle.enabled ? 'var(--color-status-success-border)' : 'var(--color-status-error-border)'}`,
+            cursor: healingToggle.loading ? 'wait' : 'pointer', fontSize: 'var(--text-xs)',
             color: healingToggle.enabled ? 'var(--color-status-success)' : 'var(--color-status-error)',
             letterSpacing: '0.05em', textTransform: 'uppercase' as any,
             fontWeight: 500, transition: 'all 180ms ease',
@@ -140,7 +142,7 @@ export default function Navbar() {
         <button
           onClick={() => navigate('/')}
           className="btn-ghost"
-          style={{ padding: '6px 16px', fontSize: 'var(--text-xs)', opacity: (isDashboard || isVisualizer) ? 0.6 : 1 }}
+          style={{ padding: '6px 16px', fontSize: 'var(--text-xs)', opacity: isHome ? 1 : 0.6, borderBottomColor: isHome ? 'var(--color-accent-primary)' : 'transparent', borderBottomWidth: 2, borderRadius: 0, borderBottomStyle: 'solid' as any }}
         >
           Home
         </button>
@@ -157,6 +159,13 @@ export default function Navbar() {
           style={{ padding: '6px 16px', fontSize: 'var(--text-xs)' }}
         >
           Live View
+        </button>
+        <button
+          onClick={() => navigate('/reports')}
+          className={isReports ? 'btn-primary' : 'btn-ghost'}
+          style={{ padding: '6px 16px', fontSize: 'var(--text-xs)' }}
+        >
+          Reports
         </button>
 
         {/* Theme toggle — simple icon */}

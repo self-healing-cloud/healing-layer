@@ -218,10 +218,10 @@ function RawLogsTable({ filters }: { filters: LogFilters }) {
                 <span style={{ color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)', width: 80, flexShrink: 0 }}>
                   {formatTimestamp(row.timestamp)}
                 </span>
-                <span className={`badge ${levelBadge(row.level)}`} style={{ flexShrink: 0, fontSize: 9 }}>{row.level}</span>
+                <span className={`badge ${levelBadge(row.level)}`} style={{ flexShrink: 0, fontSize: 'var(--text-xs)' }}>{row.level}</span>
                 <span style={{ color: 'var(--color-text-tertiary)', width: 100, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.source}</span>
                 <span style={{ flex: 1, color: 'var(--color-text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.message}</span>
-                <span style={{ color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: 9, width: 80, flexShrink: 0, textAlign: 'right' }}>{row.traceId.slice(0, 8)}</span>
+                <span style={{ color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', width: 80, flexShrink: 0, textAlign: 'right' }}>{row.traceId.slice(0, 8)}</span>
               </div>
               <AnimatePresence>
                 {expanded === row.traceId && (
@@ -236,7 +236,7 @@ function RawLogsTable({ filters }: { filters: LogFilters }) {
                       margin: 0, padding: 'var(--space-3) var(--space-4)',
                       background: 'var(--color-bg-sunken)',
                       borderRadius: 'var(--radius-md)',
-                      fontSize: 11, lineHeight: 1.6,
+                      fontSize: 'var(--text-xs)', lineHeight: 1.6,
                       color: 'var(--color-text-secondary)',
                       fontFamily: 'var(--font-mono)',
                       overflowX: 'auto',
@@ -322,7 +322,7 @@ function NormalizedLogsTable({ filters }: { filters: LogFilters }) {
                   <span style={{ color: scoreColor(row.anomaly_score ?? 0, threshold), fontFamily: 'var(--font-mono)', width: 44, flexShrink: 0, fontWeight: isAnomalous ? 600 : 400 }}>
                     {row.anomaly_score !== undefined ? row.anomaly_score.toFixed(2) : '—'}
                   </span>
-                  <span className={`badge ${row.status_code >= 500 ? 'badge-error' : row.status_code >= 400 ? 'badge-warning' : 'badge-neutral'}`} style={{ flexShrink: 0, fontSize: 9 }}>
+                  <span className={`badge ${row.status_code >= 500 ? 'badge-error' : row.status_code >= 400 ? 'badge-warning' : 'badge-neutral'}`} style={{ flexShrink: 0, fontSize: 'var(--text-xs)' }}>
                     {row.status_code}
                   </span>
                   <span style={{ color: 'var(--color-text-tertiary)', width: 80, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.service}</span>
@@ -342,7 +342,7 @@ function NormalizedLogsTable({ filters }: { filters: LogFilters }) {
                         margin: 0, padding: 'var(--space-3) var(--space-4)',
                         background: 'var(--color-bg-sunken)',
                         borderRadius: 'var(--radius-md)',
-                        fontSize: 11, lineHeight: 1.6,
+                        fontSize: 'var(--text-xs)', lineHeight: 1.6,
                         color: 'var(--color-text-secondary)',
                         fontFamily: 'var(--font-mono)',
                         overflowX: 'auto',

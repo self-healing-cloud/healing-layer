@@ -10,13 +10,13 @@
  */
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useReports } from '../hooks/useReports';
 import type { GenerateReportPayload } from '../hooks/useReports';
 import type { Report } from '../designSystem';
 import { timeAgo } from '../designSystem';
 import { useToast } from '../components/ToastNotification';
 import { useTheme } from '../designSystem';
+import Navbar from '../components/layout/Navbar';
 
 const REPORT_TYPES = [
   { value: 'incident_summary', label: 'Incident Summary' },
@@ -42,7 +42,7 @@ function StatusBadge({ status }: { status: Report['status'] }) {
 
 export default function ReportsPage() {
   const { addToast } = useToast();
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark } = useTheme();
   const { reports, generating, generateError, generate, download } = useReports();
 
   const [form, setForm] = useState<GenerateReportPayload>({
@@ -70,48 +70,12 @@ export default function ReportsPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg-primary)', color: 'var(--color-text-primary)' }}>
-      {/* Top nav */}
-      <nav style={{
-        height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 var(--space-8)',
-        borderBottom: '1px solid var(--color-border-subtle)',
-        background: 'var(--color-bg-secondary)',
-        position: 'sticky', top: 0, zIndex: 200,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-md)', color: 'var(--color-text-primary)', letterSpacing: 'var(--tracking-wider)' }}>
-            NIRAMAY
-          </span>
-          <span style={{ color: 'var(--color-border-subtle)', fontSize: 14 }}>/</span>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-accent-primary)', fontWeight: 600 }}>Reports</span>
-        </div>
-        <div style={{ display: 'flex', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', alignItems: 'center' }}>
-          <Link to="/dashboard" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none' }}>Dashboard</Link>
-          <Link to="/visualizer" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none' }}>Visualizer</Link>
-          <Link to="/reports" style={{ color: 'var(--color-accent-primary)', textDecoration: 'none', fontWeight: 600 }}>Reports</Link>
-          <div style={{ borderLeft: '1px solid var(--color-border-subtle)', paddingLeft: 'var(--space-4)', marginLeft: 'var(--space-2)' }}>
-            <button
-              onClick={toggleTheme}
-              className="btn-icon"
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {isDark ? (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
-                  <circle cx="8" cy="8" r="3.5" />
-                  <path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.05 3.05l1.06 1.06M11.89 11.89l1.06 1.06M3.05 12.95l1.06-1.06M11.89 4.11l1.06-1.06" />
-                </svg>
-              ) : (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
-                  <path d="M13.5 8.5a5.5 5.5 0 0 1-6-6A5.5 5.5 0 1 0 13.5 8.5Z" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-      </nav>
+      {/* Shared nav */}
+      <Navbar />
 
       {/* Main content */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: 'var(--space-8)', display: 'grid', gridTemplateColumns: '360px 1fr', gap: 'var(--space-8)' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '88px var(--space-8) var(--space-8)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: 'var(--space-8)' }}>
 
         {/* Left — Generation form */}
         <div>
@@ -327,7 +291,7 @@ export default function ReportsPage() {
                     <div style={{ color: 'var(--color-text-primary)', fontWeight: 600, textTransform: 'capitalize', marginBottom: 2 }}>
                       {report.report_type.replace(/_/g, ' ')}
                     </div>
-                    <div style={{ color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: 10 }}>
+                    <div style={{ color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)' }}>
                       {report.created_at ? timeAgo(report.created_at) : ''}
                     </div>
                   </div>
@@ -345,7 +309,7 @@ export default function ReportsPage() {
                         onClick={() => download(report.report_id)}
                         className="btn-ghost"
                         aria-label={`Download report ${report.report_id.slice(0, 8)}`}
-                        style={{ fontSize: 10, display: 'flex', alignItems: 'center', gap: 4 }}
+                        style={{ fontSize: 'var(--text-xs)', display: 'flex', alignItems: 'center', gap: 4 }}
                       >
                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                           <path d="M8 1v10M4 7l4 4 4-4" /><path d="M2 14h12" />
@@ -362,9 +326,15 @@ export default function ReportsPage() {
             </div>
           )}
         </div>
+        </div>
       </div>
 
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) {
+          .reports-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   );
 }

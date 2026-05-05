@@ -135,9 +135,9 @@ function Stage2Anomalies() {
             <div key={i} style={{ marginBottom: 12, padding: 12, background: 'var(--color-bg-sunken)', borderRadius: 'var(--radius-md)', borderLeft: '3px solid var(--color-status-warning)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                 <strong style={{ color: 'var(--color-text-primary)' }}>{rec.service} — {rec.endpoint}</strong>
-                <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)' }}>{timeAgo(rec.timestamp)}</span>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>{timeAgo(rec.timestamp)}</span>
               </div>
-              <p style={{ margin: '4px 0', fontSize: 12, color: 'var(--color-text-secondary)' }}>Reasons: {(rec.anomaly_reasons || []).join(', ')}</p>
+              <p style={{ margin: '4px 0', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>Reasons: {(rec.anomaly_reasons || []).join(', ')}</p>
             </div>
           ))}
         </div>
@@ -175,9 +175,9 @@ function Stage3Incidents() {
             <div key={i} style={{ marginBottom: 12, padding: 12, background: 'var(--color-bg-sunken)', borderRadius: 'var(--radius-md)', borderLeft: '3px solid var(--color-status-error)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                 <strong style={{ color: 'var(--color-text-primary)' }}>Detection {rep.detection_id?.substring(0,8)}</strong>
-                <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)' }}>{timeAgo(rep.timestamp || rep.created_at)}</span>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>{timeAgo(rep.timestamp || rep.created_at)}</span>
               </div>
-              <p style={{ margin: '4px 0', fontSize: 12, color: 'var(--color-text-secondary)' }}>{rep.human_report}</p>
+              <p style={{ margin: '4px 0', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>{rep.human_report}</p>
             </div>
           ))}
         </div>
@@ -215,10 +215,10 @@ function Stage4Healed() {
             <div key={i} style={{ marginBottom: 12, padding: 12, background: 'var(--color-bg-sunken)', borderRadius: 'var(--radius-md)', borderLeft: '3px solid var(--color-status-success)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                 <strong style={{ color: 'var(--color-text-primary)' }}>{rep.service} Healed</strong>
-                <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)' }}>{timeAgo(rep.healed_at)}</span>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>{timeAgo(rep.healed_at)}</span>
               </div>
-              <p style={{ margin: '4px 0', fontSize: 12, color: 'var(--color-text-secondary)' }}>Action: {rep.healing_action_taken}</p>
-              <p style={{ margin: '4px 0', fontSize: 12, color: 'var(--color-text-secondary)' }}>Time to heal: {rep.time_to_heal_seconds}s</p>
+              <p style={{ margin: '4px 0', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>Action: {rep.healing_action_taken}</p>
+              <p style={{ margin: '4px 0', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>Time to heal: {rep.time_to_heal_seconds}s</p>
             </div>
           ))}
         </div>

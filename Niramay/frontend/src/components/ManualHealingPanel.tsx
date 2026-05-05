@@ -99,13 +99,13 @@ export default function ManualHealingPanel() {
                         <span style={{ fontWeight: 600, fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', textTransform: 'capitalize' }}>
                           {action.healing_action.replace(/_/g, ' ')}
                         </span>
-                        <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)' }}>
+                        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)' }}>
                           {timeAgo(action.timestamp)}
                         </span>
                       </div>
 
                       {(action.service || action.endpoint) && (
-                        <div style={{ fontSize: 10, color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)', marginBottom: 'var(--space-2)' }}>
+                        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', fontFamily: 'var(--font-mono)', marginBottom: 'var(--space-2)' }}>
                           {action.service && <span>Service: {action.service}</span>}
                           {action.endpoint && <span style={{ marginLeft: 8 }}>Endpoint: {action.endpoint}</span>}
                         </div>

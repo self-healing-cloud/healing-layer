@@ -159,7 +159,7 @@ export default function PipelineProgressBar() {
           Pipeline
         </span>
         <span style={{
-          fontSize: 10, padding: '2px 10px',
+          fontSize: 'var(--text-xs)', padding: '2px 10px',
           borderRadius: 'var(--radius-full)',
           background: currentStageLabel === 'Waiting'
             ? 'var(--color-accent-tertiary)'
@@ -185,7 +185,7 @@ export default function PipelineProgressBar() {
               if (remaining === 0) {
                 return (
                   <span style={{
-                    fontSize: 9, whiteSpace: 'nowrap',
+                    fontSize: 'var(--text-xs)', whiteSpace: 'nowrap',
                     color: 'var(--color-status-info)',
                     fontFamily: 'var(--font-mono)',
                     marginTop: -2,
@@ -200,7 +200,7 @@ export default function PipelineProgressBar() {
                 : 'var(--color-status-warning)';
               return (
                 <span style={{
-                  fontSize: 9, whiteSpace: 'nowrap',
+                  fontSize: 'var(--text-xs)', whiteSpace: 'nowrap',
                   color,
                   fontFamily: 'var(--font-mono)',
                   fontVariantNumeric: 'tabular-nums',
@@ -213,7 +213,7 @@ export default function PipelineProgressBar() {
             if (node.timestamp) {
               return (
                 <span style={{
-                  fontSize: 9, whiteSpace: 'nowrap',
+                  fontSize: 'var(--text-xs)', whiteSpace: 'nowrap',
                   color: 'var(--color-text-tertiary)',
                   fontFamily: 'var(--font-mono)',
                   marginTop: -2,
@@ -230,7 +230,7 @@ export default function PipelineProgressBar() {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
                 <NodeIcon state={node.state} />
                 <span style={{
-                  fontSize: 10, whiteSpace: 'nowrap',
+                  fontSize: 'var(--text-xs)', whiteSpace: 'nowrap',
                   color: node.state !== 'idle' ? 'var(--color-text-primary)' : 'var(--color-text-tertiary)',
                   fontWeight: node.state === 'active' ? 600 : 400,
                   letterSpacing: 'var(--tracking-wider)',
@@ -269,7 +269,7 @@ export default function PipelineProgressBar() {
           padding: '2px 0',
           cursor: 'pointer',
           color: 'var(--color-text-tertiary)',
-          fontSize: 10,
+          fontSize: 'var(--text-xs)',
           letterSpacing: 'var(--tracking-wider)',
           textTransform: 'uppercase',
           marginBottom: eventsExpanded ? 'var(--space-2)' : 0,
@@ -312,12 +312,6 @@ export default function PipelineProgressBar() {
         </ol>
       )}
 
-      <style>{`
-        @keyframes niramayPulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.55; transform: scale(1.25); }
-        }
-      `}</style>
     </div>
   );
 }

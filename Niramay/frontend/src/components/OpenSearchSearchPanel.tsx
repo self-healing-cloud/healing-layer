@@ -140,10 +140,10 @@ export default function OpenSearchSearchPanel() {
             style={{ borderRadius: 'var(--radius-md)', padding: 'var(--space-2) var(--space-3)', cursor: 'default' }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--color-text-tertiary)' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
                 {formatTime(hit.timestamp)}
               </span>
-              <span style={{ fontSize: 10, color: 'var(--color-accent-primary)', fontFamily: 'var(--font-mono)' }}>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-accent-primary)', fontFamily: 'var(--font-mono)' }}>
                 score {hit._score.toFixed(2)}
               </span>
             </div>

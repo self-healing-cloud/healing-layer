@@ -72,8 +72,8 @@ export default function ObservationFeed({ logs }: { logs: ObservationLog[] }) {
             borderWidth: 1,
             cornerRadius: 8,
             padding: 8,
-            titleFont: { family: 'DM Sans', size: 11 },
-            bodyFont: { family: 'DM Sans', size: 11 },
+            titleFont: { family: 'Inter', size: 11 },
+            bodyFont: { family: 'Inter', size: 11 },
             callbacks: {
               title: () => '',
               label: (ctx) => `${(ctx.parsed.y ?? 0).toFixed(0)}ms`,
@@ -217,7 +217,7 @@ export default function ObservationFeed({ logs }: { logs: ObservationLog[] }) {
 
                 <span className="subtle-on-hover" style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: 10,
+                  fontSize: 'var(--text-xs)',
                   color: 'var(--color-text-tertiary)',
                   width: 48,
                   textAlign: 'right',
@@ -227,7 +227,7 @@ export default function ObservationFeed({ logs }: { logs: ObservationLog[] }) {
                 </span>
 
                 <span className="reveal-on-hover" style={{
-                  fontSize: 10,
+                  fontSize: 'var(--text-xs)',
                   color: 'var(--color-text-tertiary)',
                   width: 32,
                   textAlign: 'right',

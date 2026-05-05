@@ -7,10 +7,10 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-import { useTheme, createRipple, type ObservationLog, type AnomalyLog, type HealingAction } from '../designSystem';
-import { useNiramayData, usePipelineStage, useConsumerControl, useHealingToggle } from '../hooks/useNiramayData';
+import { useNavigate } from 'react-router-dom';
+import { useTheme, createRipple } from '../designSystem';
+import { useNiramayData, usePipelineStage } from '../hooks/useNiramayData';
+import Navbar from '../components/layout/Navbar';
 import StatCard from '../components/StatCard';
 import ObservationFeed from '../components/ObservationFeed';
 import DetectionAlerts from '../components/DetectionAlerts';
@@ -32,7 +32,7 @@ const API = '';
 type TriggerState = 'idle' | 'loading' | 'success' | 'error';
 
 export default function HealingDashboard({ isActive = true }: { isActive?: boolean }) {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
   // Stable ref so the scroll handler can check visibility without re-registration
   const isActiveRef = useRef(isActive);
@@ -52,8 +52,6 @@ export default function HealingDashboard({ isActive = true }: { isActive?: boole
   } = useNiramayData();
 
   const pipelineStage = usePipelineStage(true);
-  const consumer = useConsumerControl();
-  const healingToggle = useHealingToggle();
 
   const [triggerState, setTriggerState] = useState<TriggerState>('idle');
   const [triggerMessage, setTriggerMessage] = useState('');
@@ -142,202 +140,87 @@ export default function HealingDashboard({ isActive = true }: { isActive?: boole
         aria-valuemax={100}
       />
 
-      {/* ═══ Navigation ═══ */}
-      <nav
-        id="main-nav"
-        role="navigation"
-        aria-label="Main navigation"
-        className={scrolled ? 'glass-strong' : ''}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 200,
-          height: 64,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 var(--space-10)',
-          borderRadius: scrolled ? 0 : undefined,
-          borderBottom: scrolled ? '1px solid var(--color-border-subtle)' : '1px solid transparent',
-          transition: 'all 300ms cubic-bezier(0.16, 1, 0.3, 1)',
-          ...(scrolled ? {} : { background: 'transparent' }),
-        }}
-      >
-        {/* Wordmark */}
-        <span style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'var(--text-lg)',
-          color: 'var(--color-text-primary)',
-          letterSpacing: 'var(--tracking-tight)',
-        }}>
-          Niramay
-        </span>
+      {/* ═══ Shared Navigation ═══ */}
+      <Navbar />
 
-        {/* Right controls */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--space-3)',
-        }}>
-          {/* Consumer toggle */}
-          <button
-            id="consumer-toggle"
-            onClick={() => consumer.status.running ? consumer.stopConsumer() : consumer.startConsumer()}
-            disabled={consumer.loading}
-            className="ripple-host"
-            onMouseDown={(e) => createRipple(e)}
-            aria-label={consumer.status.running ? 'Stop consumer' : 'Start consumer'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--space-2)',
-              padding: '4px 12px',
-              borderRadius: 'var(--radius-full)',
-              background: consumer.status.running ? 'rgba(45, 122, 79, 0.08)' : 'rgba(239,68,68,0.06)',
-              border: `1px solid ${consumer.status.running ? 'rgba(45,122,79,0.2)' : 'rgba(239,68,68,0.15)'}`,
-              cursor: consumer.loading ? 'wait' : 'pointer',
-              transition: 'all 180ms var(--ease-out-expo)',
-            }}
-          >
-            <div style={{
-              width: 6, height: 6, borderRadius: '50%',
-              background: consumer.status.running ? 'var(--color-status-success)' : 'var(--color-status-error)',
-              animation: consumer.status.connected ? 'pulse 2s infinite' : 'none',
-            }} />
-            <span style={{
-              fontSize: 10,
-              color: consumer.status.running ? 'var(--color-status-success)' : 'var(--color-status-error)',
-              letterSpacing: 'var(--tracking-wider)',
-              textTransform: 'uppercase',
-              fontWeight: 'var(--font-weight-medium)' as any,
-            }}>
-              {consumer.loading ? '...' : consumer.status.running ? 'Consumer ON' : 'Consumer OFF'}
-            </span>
-          </button>
-
-          {/* Healing toggle */}
-          <button
-            id="healing-toggle"
-            onClick={() => healingToggle.toggle()}
-            disabled={healingToggle.loading}
-            className="ripple-host"
-            onMouseDown={(e) => createRipple(e)}
-            aria-label={healingToggle.enabled ? 'Disable healing' : 'Enable healing'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--space-2)',
-              padding: '4px 12px',
-              borderRadius: 'var(--radius-full)',
-              background: healingToggle.enabled ? 'rgba(45, 122, 79, 0.08)' : 'rgba(239,68,68,0.06)',
-              border: `1px solid ${healingToggle.enabled ? 'rgba(45,122,79,0.2)' : 'rgba(239,68,68,0.15)'}`,
-              cursor: healingToggle.loading ? 'wait' : 'pointer',
-              transition: 'all 180ms var(--ease-out-expo)',
-            }}
-          >
-            <div style={{
-              width: 6, height: 6, borderRadius: '50%',
-              background: healingToggle.enabled ? 'var(--color-status-success)' : 'var(--color-status-error)',
-            }} />
-            <span style={{
-              fontSize: 10,
-              color: healingToggle.enabled ? 'var(--color-status-success)' : 'var(--color-status-error)',
-              letterSpacing: 'var(--tracking-wider)',
-              textTransform: 'uppercase',
-              fontWeight: 'var(--font-weight-medium)' as any,
-            }}>
-              {healingToggle.enabled ? 'Healing ON' : 'Healing OFF'}
-            </span>
-          </button>
-
-          <div style={{ width: 1, height: 20, background: 'var(--color-border-subtle)' }} />
-
-          {/* Nav links */}
-          <button onClick={() => navigate('/')} className="btn-ghost" style={{ padding: '4px 12px', fontSize: 'var(--text-xs)' }}>Home</button>
-          <button onClick={() => navigate('/visualizer')} className="btn-ghost" style={{ padding: '4px 12px', fontSize: 'var(--text-xs)' }}>Live View</button>
-          <Link to="/reports" className="btn-ghost" style={{ padding: '4px 12px', fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', textDecoration: 'none' }}>Reports</Link>
-
-          {/* Live indicator */}
-          <button
-            id="live-toggle"
-            onClick={() => setIsLive(!isLive)}
-            className="ripple-host"
-            onMouseDown={(e) => createRipple(e)}
-            aria-label={isLive ? 'Pause live updates' : 'Resume live updates'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--space-2)',
-              padding: '4px 14px',
-              borderRadius: 'var(--radius-full)',
-              background: isLive ? 'rgba(45, 122, 79, 0.08)' : 'var(--color-accent-tertiary)',
-              border: '1px solid ' + (isLive ? 'rgba(45, 122, 79, 0.15)' : 'var(--color-border-default)'),
-              cursor: 'pointer',
-              transition: 'all 180ms var(--ease-out-expo)',
-            }}
-          >
-            <span
-              className={`dot ${isLive ? 'dot-success dot-live' : 'dot-neutral'}`}
-              style={{ width: 6, height: 6 }}
-            />
-            <span style={{
-              fontSize: 10,
-              color: isLive ? 'var(--color-status-success)' : 'var(--color-text-tertiary)',
-              letterSpacing: 'var(--tracking-wider)',
-              textTransform: 'uppercase',
-              fontWeight: 'var(--font-weight-medium)' as any,
-            }}>
-              {isLive ? 'Live' : 'Paused'}
-            </span>
-          </button>
-
-          {/* Refresh */}
-          <button
-            id="refresh-btn"
-            onClick={fetchData}
-            className="btn-icon"
-            aria-label="Refresh data"
-          >
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"
-              stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
-              <path d="M1.5 8a6.5 6.5 0 0 1 12-3" />
-              <path d="M14.5 8a6.5 6.5 0 0 1-12 3" />
-              <polyline points="1.5,3 1.5,7 5,6" />
-              <polyline points="14.5,13 14.5,9 11,10" />
-            </svg>
-          </button>
-
-          {/* Last refresh */}
+      {/* ═══ Dashboard Sub-bar ═══ */}
+      <div style={{
+        position: 'fixed',
+        top: 64,
+        left: 0,
+        right: 0,
+        zIndex: 199,
+        height: 40,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        gap: 'var(--space-3)',
+        padding: '0 var(--space-10)',
+        background: 'var(--color-bg-secondary)',
+        borderBottom: '1px solid var(--color-border-subtle)',
+        transition: 'background 300ms, border-color 300ms',
+      }}>
+        {/* Live indicator */}
+        <button
+          id="live-toggle"
+          onClick={() => setIsLive(!isLive)}
+          className="ripple-host"
+          onMouseDown={(e) => createRipple(e)}
+          aria-label={isLive ? 'Pause live updates' : 'Resume live updates'}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'var(--space-2)',
+            padding: '4px 14px',
+            borderRadius: 'var(--radius-full)',
+            background: isLive ? 'var(--color-status-success-bg)' : 'var(--color-accent-tertiary)',
+            border: '1px solid ' + (isLive ? 'var(--color-status-success-border)' : 'var(--color-border-default)'),
+            cursor: 'pointer',
+            transition: 'all 180ms var(--ease-out-expo)',
+          }}
+        >
+          <span
+            className={`dot ${isLive ? 'dot-success dot-live' : 'dot-neutral'}`}
+            style={{ width: 6, height: 6 }}
+          />
           <span style={{
-            fontSize: 10,
-            color: 'var(--color-text-tertiary)',
-            fontVariantNumeric: 'tabular-nums',
-            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--text-xs)',
+            color: isLive ? 'var(--color-status-success)' : 'var(--color-text-tertiary)',
+            letterSpacing: 'var(--tracking-wider)',
+            textTransform: 'uppercase',
+            fontWeight: 'var(--font-weight-medium)' as any,
           }}>
-            {lastRefresh.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            {isLive ? 'Live' : 'Paused'}
           </span>
+        </button>
 
-          {/* Theme toggle — simple icon */}
-          <button
-            onClick={toggleTheme}
-            className="btn-icon"
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {isDark ? (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
-                <circle cx="8" cy="8" r="3.5" />
-                <path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3.05 3.05l1.06 1.06M11.89 11.89l1.06 1.06M3.05 12.95l1.06-1.06M11.89 4.11l1.06-1.06" />
-              </svg>
-            ) : (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
-                <path d="M13.5 8.5a5.5 5.5 0 0 1-6-6A5.5 5.5 0 1 0 13.5 8.5Z" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </nav>
+        {/* Refresh */}
+        <button
+          id="refresh-btn"
+          onClick={fetchData}
+          className="btn-icon"
+          aria-label="Refresh data"
+          style={{ width: 28, height: 28 }}
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+            stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+            <path d="M1.5 8a6.5 6.5 0 0 1 12-3" />
+            <path d="M14.5 8a6.5 6.5 0 0 1-12 3" />
+            <polyline points="1.5,3 1.5,7 5,6" />
+            <polyline points="14.5,13 14.5,9 11,10" />
+          </svg>
+        </button>
+
+        {/* Last refresh */}
+        <span style={{
+          fontSize: 'var(--text-xs)',
+          color: 'var(--color-text-tertiary)',
+          fontVariantNumeric: 'tabular-nums',
+          fontFamily: 'var(--font-mono)',
+        }}>
+          {lastRefresh.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </span>
+      </div>
 
       {/* ═══ Content ═══ */}
       <main
@@ -345,7 +228,7 @@ export default function HealingDashboard({ isActive = true }: { isActive?: boole
         style={{
           maxWidth: 1120,
           margin: '0 auto',
-          padding: '104px var(--space-10) var(--space-24)',
+          padding: '128px var(--space-10) var(--space-24)',
         }}
       >
 
@@ -378,10 +261,8 @@ export default function HealingDashboard({ isActive = true }: { isActive?: boole
               height: 90,
               right: 30,
               top: 40,
-              background: isDark
-                ? 'linear-gradient(135deg, rgba(212,132,94,0.08), rgba(212,132,94,0.02))'
-                : 'linear-gradient(135deg, rgba(196,101,58,0.06), rgba(196,101,58,0.01))',
-              border: `1px solid ${isDark ? 'rgba(212,132,94,0.12)' : 'rgba(196,101,58,0.08)'}`,
+              background: `linear-gradient(135deg, var(--color-accent-warm-bg), transparent)`,
+              border: '1px solid var(--color-border-subtle)',
               borderRadius: 'var(--radius-lg)',
               transform: 'rotateX(12deg) rotateY(-18deg)',
               transformStyle: 'preserve-3d',
@@ -396,10 +277,8 @@ export default function HealingDashboard({ isActive = true }: { isActive?: boole
               height: 70,
               right: 100,
               top: 100,
-              background: isDark
-                ? 'linear-gradient(145deg, rgba(212,132,94,0.06), transparent)'
-                : 'linear-gradient(145deg, rgba(196,101,58,0.04), transparent)',
-              border: `1px solid ${isDark ? 'rgba(212,132,94,0.08)' : 'rgba(196,101,58,0.06)'}`,
+              background: `linear-gradient(145deg, var(--color-accent-warm-bg), transparent)`,
+              border: '1px solid var(--color-border-subtle)',
               borderRadius: 'var(--radius-md)',
               transform: 'rotateX(-8deg) rotateY(22deg)',
               animation: 'floatReverse 6s ease-in-out infinite',
@@ -414,10 +293,8 @@ export default function HealingDashboard({ isActive = true }: { isActive?: boole
               right: 160,
               top: 50,
               borderRadius: 'var(--radius-full)',
-              background: isDark
-                ? 'radial-gradient(circle, rgba(212,132,94,0.10) 0%, transparent 70%)'
-                : 'radial-gradient(circle, rgba(196,101,58,0.08) 0%, transparent 70%)',
-              border: `1px solid ${isDark ? 'rgba(212,132,94,0.06)' : 'rgba(196,101,58,0.04)'}`,
+              background: `radial-gradient(circle, var(--color-accent-warm-bg) 0%, transparent 70%)`,
+              border: '1px solid var(--color-border-subtle)',
               animation: 'float 8s ease-in-out infinite',
               animationDelay: '-4s',
             }} />
