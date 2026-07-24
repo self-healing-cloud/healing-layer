@@ -328,7 +328,7 @@ To establish the pipeline in a Jenkins instance:
 
 | Component | Status |
 |---|---|
-| Component C: Demo application | In progress |
+| Component C: Demo application | Complete |
 | Component B Stage 1: Log ingestion | Complete |
 | Component B Stage 2: Rule based detection | Complete |
 | Component B Stage 3: LLM classification + reporting | Complete |
@@ -339,4 +339,7 @@ To establish the pipeline in a Jenkins instance:
 
 ## Team
 
-[Add team member names here]
+Aditya Shrivastava
+Ananya Karn
+Parth Garg
+Katyayini Singh
